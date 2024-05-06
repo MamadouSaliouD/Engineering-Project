@@ -1,0 +1,56 @@
+{% block title %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>Welcome to our Task Management App</h1>
+
+  <h3>My Tasks</h3>
+  
+  <p>Please <a href="{% url 'signup_page' %}" class="signup_page">signup</a> to manage your tasks.</p>
+</div>
+
+<style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom right, #3498db, #2c3e50);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Ensure full-height view */
+    color: #fff;
+  }
+
+  .container {
+    max-width: 600px;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+  }
+
+  h1, h3 {
+    color: #333;
+  }
+
+ p {
+    color:black;
+    
+ }
+ a {
+  text-decoration: none; 
+  color: #3498db; 
+}
+ 
+
+  
+</style>
+
+{% endblock %}
+    
+  
+    
+  
+    

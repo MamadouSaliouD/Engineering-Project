@@ -1,0 +1,15 @@
+{% extends "taf/general.html"%}
+
+{% block title %}
+    <h1>{{ task.title }}</h1>
+{%endblock%} 
+
+{%block content %}
+    <p>Description: {{ task.description }}</p>
+    <p>completed: {{ task.completed }}</p>
+    <p>Created on: {{ task.created_on }}</p>
+    
+    
+    <p>Back to <a href="{% url 'task_list' %}">Your tasks</a></p>
+
+{%endblock%}

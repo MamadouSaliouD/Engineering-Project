@@ -1,0 +1,51 @@
+{% extends "taf/menu.html" %}
+{% block title %}
+  Task management app - Sign Up
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+                    <form class="site-form" action="{% url 'task_list' %}" method="post">
+                        {% csrf_token %}
+                        <div class="mb">
+                            <label for="username" class="form-label">Username:</label>
+                            <input type="text" id="username" name="username" class="form-control" required>
+                        </div>
+                        <div class="mb">
+                            <label for="name" class="form-label">Name:</label>
+                            <input type="text" id="name" name="name" class="form-control" required>
+                        </div>
+                        <div class="mb">
+                            <label for="surname" class="form-label">Surname:</label>
+                            <input type="text" id="surname" name="surname" class="form-control" required>
+                        </div>
+                        <div class="mb">
+                            <label for="country" class="form-label">Country:</label>
+                            <input type="text" id="country" name="country" class="form-control" required>
+                        </div>
+                        <div class="mb">
+                            <label for="city" class="form-label">City:</label>
+                            <input type="text" id="city" name="city" class="form-control" required>
+                        </div>
+                        <div class="mb">
+                            <label for="password1" class="form-label">Password:</label>
+                            <input type="password" id="password1" name="password1" class="form-control" required>
+                        </div>
+                        <div class="mb-1">
+                            <label for="password2" class="form-label">Confirm Password:</label>
+                            <input type="password" id="password2" name="password2" class="form-control" required>
+                        </div>
+                        <input type="submit" value="Signup" class="btn btn-primary">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

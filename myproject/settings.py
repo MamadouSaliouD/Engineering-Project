@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'taf',
-    'bootstrap5',
 ]
 LOGIN_URL = '/signup_page/'
 MIDDLEWARE = [

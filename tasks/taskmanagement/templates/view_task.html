@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+<style>
+    .task-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .stage-container {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .task-card {
+        width: 30%;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin-bottom: 10px;
+        cursor: not-allowed;
+    }
+
+    .task-card.active {
+        cursor: pointer;
+    }
+
+    .current {
+        background-color: lightblue;
+    }
+
+    .card-details {
+        display: none;
+    }
+
+    .active .card-details {
+        display: block;
+    }
+</style>
+
+<div class="container mt-5">
+    {% for task in tasks %}
+        <div class="task-container">
+            <div class="stage-container">
+                <div class="task-card {% if task.status == 'New' %}New{% endif %}{% if task.status == 'New' %} current{% endif %}{% if task.status == 'New' %} active{% endif %}" {% if task.status == 'New' %}onclick="window.location.href='{% url 'task_detail' task_id=task.id %}'"{% endif %}>
+                    <h6>New</h6>
+                    <div class="card-details">
+                        <p>Title: {{ task.title }}</p>
+                        <p>Created: {{ task.created_at }}</p>
+                    </div>
+                </div>
+                <div class="task-card {% if task.status == 'In Progress' %}In Progress{% endif %}{% if task.status == 'In Progress' %} current{% endif %}{% if task.status == 'In Progress' %} active{% endif %}" {% if task.status == 'In Progress' %}onclick="window.location.href='{% url 'task_detail' task_id=task.id %}'"{% endif %}>
+                    <h6>In Progress</h6>
+                    <div class="card-details">
+                        <p>Title: {{ task.title }}</p>
+                        <p>Created: {{ task.created_at }}</p>
+                    </div>
+                </div>
+                <div class="task-card {% if task.status == 'Done' %}Done{% endif %}{% if task.status == 'Done' %} current{% endif %}{% if task.status == 'Done' %} active{% endif %}" {% if task.status == 'Done' %}onclick="window.location.href='{% url 'task_detail' task_id=task.id %}'"{% endif %}>
+                    <h6>Done</h6>
+                    <div class="card-details">
+                        <p>Title: {{ task.title }}</p>
+                        <p>Created: {{ task.created_at }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

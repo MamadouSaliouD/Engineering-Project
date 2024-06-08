@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Tasks Sprints 
+{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+    <h1>All Task Sprints</h1>
+    <div class="task-sprints">
+        {% for task_sprint in task_sprints %}
+            <div class="task-sprint">
+                <div class="stages">
+                    {% for stage in task_sprint.stages %}
+                        <div class="stage {% if stage.active %}active{% else %}inactive{% endif %}">
+                            <h3>{{ stage.name }}</h3>
+                            {% if stage.active %}
+                                <p><strong>{{ task_sprint.task.title }}</strong> <strong style="color: red;">({{ task_sprint.task.priority }})</strong></p>
+                                <p>Assigned to: {{ task_sprint.task.assigned_to }}</p>
+                                <a href="{% url 'task_detail' task_sprint.task.id %}" class="btn btn-primary">View Task Details</a>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <style>
+        .task-sprints {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .task-sprint {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .stages {
+            display: flex;
+            justify-content: space-between;
+        }
+        .stage {
+            width: 30%;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .stage.active {
+            background-color: #e0ffe0;
+        }
+        .stage.inactive {
+            background-color: #ffe0e0;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
+{% endblock %}

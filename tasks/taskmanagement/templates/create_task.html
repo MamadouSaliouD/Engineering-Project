@@ -1,0 +1,155 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Create Task
+{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h1 class="mb-4">Create Task</h1>
+                {% if form.errors %}
+                    <div class="alert alert-danger">
+                        <ul>
+                            {% for field, errors in form.errors.items %}
+                                <li>{{ field }}:
+                                    <ul>
+                                        {% for error in errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_title">Title:</label>
+                        <input type="text" class="form-control" id="id_title" name="title" placeholder="Enter title" value="{{ form.title.value|default_if_none:'' }}">
+                        {% if form.title.errors %}
+                            <div class="text-danger">
+                                {% for error in form.title.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="task_token" class="form-label">Task Number</label>
+                        <input type="text" class="form-control" id="task_token" name="task_token" value="{{ form.instance.task_token }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_assignment_group" class="form-label">Assignment Group</label>
+                        <select class="form-control" id="id_assignment_group" name="assignment_group">
+                            {% for group in assignment_groups %}
+                                <option value="{{ group.id }}" {% if form.assignment_group.value == group.id %}selected{% endif %}>{{ group.name }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if form.assignment_group.errors %}
+                            <div class="text-danger">
+                                {% for error in form.assignment_group.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_description">Description:</label>
+                        <textarea class="form-control" id="id_description" name="description" placeholder="Enter description">{{ form.description.value|default_if_none:'' }}</textarea>
+                        {% if form.description.errors %}
+                            <div class="text-danger">
+                                {% for error in form.description.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_due_date">Due Date:</label>
+                        <input type="datetime-local" class="form-control" id="id_due_date" name="due_date" value="{{ form.due_date.value|default_if_none:'' }}">
+                        {% if form.due_date.errors %}
+                            <div class="text-danger">
+                                {% for error in form.due_date.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_priority">Priority:</label>
+                        <select class="form-control" id="id_priority" name="priority">
+                            {% for value, label in form.fields.priority.choices %}
+                                <option value="{{ value }}" {% if form.priority.value == value %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if form.priority.errors %}
+                            <div class="text-danger">
+                                {% for error in form.priority.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_status">Status:</label>
+                        <select class="form-control" id="id_status" name="status">
+                            {% for value, label in form.fields.status.choices %}
+                                <option value="{{ value }}" {% if form.status.value == value %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if form.status.errors %}
+                            <div class="text-danger">
+                                {% for error in form.status.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_creator">Creator:</label>
+                        <input type="hidden" class="form-control" id="id_creator" name="creator" value="{{ request.user.id }}">
+                        <input type="text" class="form-control" value="{{ request.user.email }}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="id_assigned_to">Assign To:</label>
+                        <select class="form-control" id="id_assigned_to" name="assigned_to">
+                            <option value="">Select User</option>
+                            {% for user in users %}
+                                {% for group in assignment_groups %}
+                                    {% if user in group.members.all %}
+                                        <option value="{{ user.email }}" {% if form.assigned_to.value == user.email %}selected{% endif %}>{{ user.email }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            {% endfor %}
+                        </select>
+                        {% if form.assigned_to.errors %}
+                            <div class="text-danger">
+                                {% for error in form.assigned_to.errors %}
+                                    <p>{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Task</button>
+                </form>
+                <br>
+            </div>
+        </div>
+    </div>
+    <div id="success-message" class="alert alert-success" style="display: none;">
+        Task created successfully!
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            var form = document.querySelector('form');
+            form.addEventListener('submit', function(event) {
+                document.getElementById('success-message').style.display = 'block';
+            });
+        });
+    </script>
+{% endblock %}

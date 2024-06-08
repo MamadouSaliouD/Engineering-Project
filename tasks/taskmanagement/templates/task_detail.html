@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Task Details - {{ task.title }}
+{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h1 class="mb-4">Task Details</h1>
+                <table class="table table-striped">
+                    <tr>
+                        <th>Task Number</th>
+                        <td>{{ task.task_token }}</td>
+                    </tr>
+                    <tr>
+                        <th>Title</th>
+                        <td>{{ task.title }}</td>
+                    </tr>
+                    <tr>
+                        <th>Description</th>
+                        <td>{{ task.description }}</td>
+                    </tr>
+                    <tr>
+                        <th>Due Date</th>
+                        <td>{{ task.due_date }}</td>
+                    </tr>
+                    <tr>
+                        <th>Priority</th>
+                        <td>{{ task.get_priority_display }}</td>
+                    </tr>
+                    <tr>
+                        <th>Status</th>
+                        <td>{{ task.get_status_display }}</td>
+                    </tr>
+                    <tr>
+                        <th>Creator</th>
+                        <td>{{ task.creator.email }}</td>
+                    </tr>
+                    <tr>
+                        <th>Assigned To</th>
+                        <td>{{ task.assigned_to }}</td>
+                    </tr>
+                    <tr>
+                        <th>Assignment Group</th>
+                        <td>{{ task.assignment_group.name }}</td>
+                    </tr>
+                </table>
+                <a href="{% url 'update_task' task.id %}" class="btn btn-primary">Edit Task</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

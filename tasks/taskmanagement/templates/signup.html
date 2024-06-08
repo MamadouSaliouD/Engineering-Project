@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Sign Up - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-md-center">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <main class="form-signin">
+                    <form method="post">
+                        {% csrf_token %}
+                        <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+                        {{ form.as_p }}
+                        <button class="w-100 btn btn-lg btn-primary" type="submit">Sign up</button>
+                    </form>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

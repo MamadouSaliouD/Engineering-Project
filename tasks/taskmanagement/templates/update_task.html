@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Update Task - {{ form.instance.title }}
+{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+<div class="container mt-5">
+    <h1>Update Task</h1>
+    {% if form.errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+            <li>{{ field|title }}: {{ error }}</li>
+            {% endfor %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{ form.instance.title }}">
+        </div>
+        <div class="form-group">
+            <label for="task_token" class="form-label">Task Number</label>
+            <input type="text" class="form-control" id="task_token" name="task_token" value="{{ form.instance.task_token }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="id_creator">Creator:</label>
+            <input type="hidden" class="form-control" id="id_creator" name="creator" value="{{ request.user.id }}">
+            <input type="text" class="form-control" value="{{ request.user.email }}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="assignment_group" class="form-label">Assignment Group</label>
+            <select class="form-control" id="assignment_group" name="assignment_group">
+                {% for group in assignment_groups %}
+                    <option value="{{ group.id }}" {% if form.instance.assignment_group and form.instance.assignment_group.id == group.id %}selected{% endif %}>{{ group.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="id_assigned_to">Assign To:</label>
+            <select class="form-control" id="id_assigned_to" name="assigned_to">
+                <option value="">Select User</option>
+                {% for user in users %}
+                    {% for group in assignment_groups %}
+                        {% if user in group.members.all %}
+                            <option value="{{ user.email }}" {% if form.instance.assigned_to == user.email %}selected{% endif %}>{{ user.email }}</option>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </select>
+            {% if form.assigned_to.errors %}
+                <div class="text-danger">
+                    {% for error in form.assigned_to.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" name="description" rows="3">{{ form.instance.description }}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="due_date">Due Date</label>
+            <input type="datetime-local" class="form-control" id="due_date" name="due_date" value="{{ form.instance.due_date|date:"Y-m-d\\TH:i" }}">
+        </div>
+        <div class="form-group">
+            <label for="priority">Priority</label>
+            <select class="form-control" id="priority" name="priority">
+                {% for value, label in form.fields.priority.choices %}
+                <option value="{{ value }}" {% if form.instance.priority == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="status">Status</label>
+            <select class="form-control" id="status" name="status">
+                {% for value, label in form.fields.status.choices %}
+                <option value="{{ value }}" {% if form.instance.status == value %}selected{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary">Update Task</button>
+    </form>
+</div>
+{% endblock %}

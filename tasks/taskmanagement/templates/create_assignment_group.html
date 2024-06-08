@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Assignment Group{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center">Create Assignment Group</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary">Create Assignment Group</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

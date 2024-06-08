@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Task Sprint 
+{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+<h1>Sprint for Task: {{ task.title }}</h1>
+<div class="stages">
+    {% for stage in stages %}
+        <div class="stage {% if stage.active %}active{% else %}inactive{% endif %}">
+            <h2>{{ stage.name }}</h2>
+            {% if stage.active %}
+            <p><strong>{{ task.title }}</strong> <strong style="color: red;">({{ task.priority }})</strong></p>
+                <a href="{% url 'task_detail' task.id %}" class="btns btn-primary">View Task Details</a>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+<style>
+    .stages {
+        display: flex;
+        justify-content: space-between;
+    }
+    .stage {
+        width: 30%;
+        border: 1px solid #ccc;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+    }
+    .stage.active {
+        background-color: #e0ffe0;
+    }
+    .stage.inactive {
+        background-color: #ffe0e0;
+    }
+    .btns {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        text-align: center;
+        text-decoration: none;
+        color: #fff;
+        background-color: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .btn:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+{% endblock %}

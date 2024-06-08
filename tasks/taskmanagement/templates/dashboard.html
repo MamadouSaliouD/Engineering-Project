@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+{% include 'menu.html' %}
+<div class="container mt-5">
+    <h1 class="text-center">Tasks Dashboard</h1>
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+    <a href="{% url 'create_task' %}" class="btn btn-primary">Add New Task</a>
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <h2>New</h2>
+            {% for task in tasks_new %}
+                <div class="task_card">
+                    <div class="task-title">
+                        <h3><a href="{% url 'task_detail' task_id=task.id %}">{{ task.title }}</a></h3>
+                    </div>
+                    <div class="task-actions">
+                        {% if task.creator == user %}
+                            <form action="{% url 'update_task' task_id=task.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-info">Update</button>
+                            </form>
+                            <form action="{% url 'delete_task' task_id=task.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-warning">Delete</button>
+                            </form>
+                        {% elif task.assigned_to == user %}
+                            <form action="{% url 'update_task' task_id=task.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-info">Update</button>
+                            </form>
+                        {% endif %}
+                        <a href="{% url 'sprint_view' task_id=task.id %}" class="btn btn-primary">View Sprint</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="col-md-4">
+            <h2>In Progress</h2>
+            {% for task in tasks_in_progress %}
+                <div class="task_card">
+                    <div class="task-title">
+                        <h3><a href="{% url 'task_detail' task_id=task.id %}">{{ task.title }}</a></h3>
+                    </div>
+                    <div class="task-actions">
+                        {% if task.creator == user %}
+                            <form action="{% url 'update_task' task_id=task.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-info">Update</button>
+                            </form>
+                            <form action="{% url 'delete_task' task_id=task.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-warning">Delete</button>
+                            </form>
+                        {% elif task.assigned_to == user %}
+                            <form action="{% url 'update_task' task_id=task.id %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-info">Update</button>
+                            </form>
+                        {% endif %}
+                        <a href="{% url 'sprint_view' task_id=task.id %}" class="btn btn-primary">View Sprint</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class="col-md-4">
+            <h2>Done</h2>
+            {% for task in tasks_done %}
+                <div class="task_card">
+                    <div class="task-title">
+                        <h3><a href="{% url 'task_detail' task_id=task.id %}">{{ task.title }}</a></h3>
+                    </div>
+                    <div class="task-actions">
+                        <a href="{% url 'sprint_view' task_id=task.id %}" class="btn btn-primary">View Sprint</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

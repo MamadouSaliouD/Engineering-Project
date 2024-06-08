@@ -1,0 +1,90 @@
+.task-card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.task-stage {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.task-stage-new {
+    color: #007bff;
+}
+
+.task-stage-in-progress {
+    color: #ffc107;
+}
+
+.task-stage-done {
+    color: #28a745;
+}
+
+.task-list {
+    list-style: none;
+    padding: 0;
+}
+
+.task_card {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.task-title {
+    margin-right: auto;
+}
+
+.task-actions {
+    margin-left: 10px;
+}
+
+.task-actions button {
+    margin-left: 5px;
+}
+
+.task-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.stage-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.task-card {
+    width: 30%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: not-allowed;
+}
+
+.task-card.active {
+    cursor: pointer;
+}
+
+.current {
+    background-color: lightblue;
+}
+
+.card-details {
+    display: none;
+}
+
+.active .card-details {
+    display: block;
+}

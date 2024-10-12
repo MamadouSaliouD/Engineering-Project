@@ -1,0 +1,51 @@
+trigger:
+  - main
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  vmName: 'myWindowsVM'
+  resourceGroupName: 'myResourceGroup'
+  keyVaultName: 'myKeyVault'
+  secretName: 'dbPassword'
+
+stages:
+  - stage: Build
+    jobs:
+      - job: Build
+        steps:
+          - script: echo "Building the project..."
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.x'
+          - script: |
+              python -m pip install --upgrade pip
+              pip install -r requirements.txt
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.SourcesDirectory)'
+              ArtifactName: 'myArtifact'
+  - stage: Deploy
+    jobs:
+      - job: Deploy
+        steps:
+          - task: AzureKeyVault@1
+            inputs:
+              azureSubscription: 'your-service-connection'
+              KeyVaultName: '$(keyVaultName)'
+              SecretsFilter: '$(secretName)'
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: 'your-service-connection'
+              scriptType: 'powershell'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                $dbPassword = $(dbPassword)
+                az vm run-command invoke --command-id RunPowerShellScript --name $(vmName) --resource-group $(resourceGroupName) --scripts @"
+                  Set-Content -Path 'C:\config\config.yaml' -Value '$(cat config.yaml)'
+                "@
+          - script: echo "Deploying the artifacts..."
+          - script: |
+              # Add your deployment commands here
+              echo "Starting Django server..."
+              # Example for deploying a Django app

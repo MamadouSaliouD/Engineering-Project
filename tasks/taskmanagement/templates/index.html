@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Welcome to Taskify{% endblock %}
+
+{% block content %}
+<section style="text-align: center; margin-bottom: 40px;">
+    <h2 style="margin-bottom: 30px; font-size: 2rem;">Features</h2>
+    <div class="row" style="display: flex; justify-content: center; gap: 30px;">
+        <div class="col-md-4 feature" style="max-width: 320px;">
+            <img src="{% static 'images/1.jpg' %}" alt="Task Creation" style="width: 30%; height: 20%; margin-bottom: 15px;">
+            <h5>Create Tasks</h5>
+            <p>Quickly add and organize your tasks with ease.</p>
+        </div>
+        <div class="col-md-4 feature" style="max-width: 320px;">
+            <img src="{% static 'images/2.jpg' %}" alt="Progress Tracking" style="width: 30%; height: 20%; margin-bottom: 15px;">
+            <h5>Track Progress with our Sprint dashboard</h5>
+            <p>Stay on top of deadlines with real-time progress tracking.</p>
+        </div>
+        <div class="col-md-4 feature" style="max-width: 320px;">
+            <img src="{% static 'images/3.jpg' %}" alt="Reminders" style="width: 30%; height: 20%; margin-bottom: 15px;">
+            <h5>Assign Task</h5>
+            <p>Create group, add members to it and assign task to them.</p>
+        </div>
+    </div>
+</section>
+
+<section style="margin-top: 10px;">
+    <h2 style="text-align: center; margin-bottom: 30px; font-size: 2rem;">Watch Our Demo</h2>
+    <div class="text-center">
+        <video style="width: 400px; height: 150px;" controls>
+            <source src="{% static 'videos/TASK.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</section>
+{% endblock %}

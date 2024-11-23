@@ -13,6 +13,10 @@ User = get_user_model()
 #hpg6j9.Z6ZYFkcQ
 from django.db.models import Q
 
+
+def index(request):
+    return render(request, 'index.html')
+
 @login_required
 def view_mytask(request, task_id):
     valid_statuses = ["New", "In Progress", "Done"]

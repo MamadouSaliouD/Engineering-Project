@@ -61,7 +61,7 @@
 <body>
     <nav class="navbar navbar-expand-lg navbar-custom">
         <div class="container">
-            <a class="navbar-brand" href="#">Task Management</a>
+            <a class="navbar-brand" href="{% url 'index' %}">Task Management</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -69,9 +69,11 @@
                 <ul class="navbar-nav ml-auto">
                     {% if user.is_authenticated %}
                     <li class="nav-item">
+                        <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{% url 'all_sprints_view' %}">All Sprints</a>
                     </li>
-                    
                     {% else %}
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'login' %}">Login</a>
@@ -84,8 +86,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'assignment_groups' %}">Assignment Groups</a>
                     </li>
+                    <!-- Admin Dashboard Link -->
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'admin:index' %}">Admin</a>
+                        <a class="nav-link" href="{% url 'admin:index' %}">Admin Dashboard</a>
                     </li>
                     {% endif %}
                     {% if user.is_authenticated %}

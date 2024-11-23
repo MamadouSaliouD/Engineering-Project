@@ -1,0 +1,2 @@
+db_host: mydbserver.database.windows.net
+db_name: mydatabase
